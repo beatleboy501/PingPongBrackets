@@ -1,0 +1,49 @@
+#root > div {
+    height: 100%;
+}
+
+#create-bracket {
+    align-items: center;
+    height: 100%
+}
+
+#create-bracket form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+#create-bracket form .bracket-title {
+    width: 30rem;
+    margin: 1rem;
+}
+
+#create-bracket form .number-of-users {
+    width: 10rem;
+    margin: 1rem;
+}
+
+#create-bracket form .cancel-button {
+    width: 5rem;
+    height: 4rem;
+    margin: 1rem;
+}
+
+#create-bracket form .submit-button {
+    width: 5rem;
+    height: 4rem;
+    margin: 1rem;
+}
+
+ul#bracket-users {
+    list-style-type: none;
+    -moz-column-count: 4;
+    -moz-column-gap: 20px;
+    -webkit-column-count: 4;
+    -webkit-column-gap: 20px;
+    column-count: 4;
+    column-gap: 20px;
+    overflow: auto;
+}
