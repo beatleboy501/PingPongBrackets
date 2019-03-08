@@ -43,11 +43,44 @@ const UnableToUpdateResult = ({currentResult, classes, onClose}) => {
 
 const GameResultDialog = (props) => {
   if(!props) return;
-  const { classes, currentResult, onClose, onSave } = props;
+  let state = {loserScore: null, winnerScore: null}
+  const { classes, currentResult, onClose } = props;
   if (!currentResult.winner || !currentResult.loser) return  <UnableToUpdateResult {...props} />;
+
+  const handleUpdateScore = (participant, score) => {
+    state[participant] = score
+  }
+
+  const handleSave = async () => {
+    console.log(currentResult)
+    const body = {
+      nextGameId: currentResult.game.next_game,
+      result: {
+        winner: {
+          participantId: currentResult.winner.sub,
+          score: state.winnerScore
+        },
+        loser: {
+          participantId: currentResult.loser.sub,
+          score: state.loserScore
+        }
+      }
+    }
+    const updatedGame = await fetch(`https://83yeog1v01.execute-api.us-east-1.amazonaws.com/mock/api/game/${currentResult.game.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+    body: JSON.stringify(body)
+    }).then(res => res.json()).then(data => {
+      console.log(data)
+      return data.map(d => d["Attributes"])
+    }).catch(err => console.error(err))
+    onClose()
+  }
   return (
     <Dialog open={currentResult.open} classes={{paper: classes.dialogPaper}}>
-      <DialogTitle>Round: {currentResult.game && currentResult.game.round}</DialogTitle>
+      <DialogTitle>Round: {currentResult.game && currentResult.game.round_name}</DialogTitle>
       <DialogContentText>Update Result</DialogContentText>
       <List>
         <ListItem>
@@ -57,13 +90,14 @@ const GameResultDialog = (props) => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={
-            `Winner: ${currentResult.winner && currentResult.winner.first} ${currentResult.winner && currentResult.winner.second}`
+            `Winner: ${currentResult.winner && currentResult.winner.given_name} ${currentResult.winner && currentResult.winner.family_name}`
           }/>
           <TextField
             className={classes.scoreInput}
             label="Score"
             margin="normal"
             variant="outlined"
+            onChange={(e) => handleUpdateScore("winnerScore", e.target.value)}
           />
         </ListItem>
         <ListItem>
@@ -73,19 +107,20 @@ const GameResultDialog = (props) => {
             </Avatar>
           </ListItemAvatar>
           <ListItemText primary={
-            `Loser: ${currentResult.loser && currentResult.loser.first} ${currentResult.loser && currentResult.loser.second}`
+            `Loser: ${currentResult.loser && currentResult.loser.given_name} ${currentResult.loser && currentResult.loser.family_name}`
           }/>
           <TextField
             className={classes.scoreInput}
             label="Score"
             margin="normal"
             variant="outlined"
+            onChange={(e) => handleUpdateScore("loserScore", e.target.value)}
           />
         </ListItem>
       </List>
       <div>
         <Button onClick={onClose}>Close</Button>
-        <Button onClick={onSave}>Save</Button>
+        <Button onClick={handleSave}>Save</Button>
       </div>
     </Dialog>
   );

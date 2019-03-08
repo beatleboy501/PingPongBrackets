@@ -110,6 +110,15 @@ Parameters:
   useDefault:
     Type: String
             
+  authSelections:
+    Type: String
+            
+  resourceName:
+    Type: String
+                  
+  userpoolClientWriteAttributes:
+    Type: CommaDelimitedList
+      
   unAuthRoleName:
     Type: String
             
@@ -120,12 +129,6 @@ Parameters:
     Type: String
             
   authRoleArn:
-    Type: String
-            
-  resourceName:
-    Type: String
-            
-  authSelections:
     Type: String
           
 Resources:
@@ -169,6 +172,16 @@ Resources:
       Schema: 
         
         -
+          Name: family_name
+          Required: true
+          Mutable: true
+        
+        -
+          Name: given_name
+          Required: true
+          Mutable: true
+        
+        -
           Name: email
           Required: true
           Mutable: true
@@ -198,7 +211,10 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: cognito87879480_app_clientWeb
+      ClientName: PingPongBracketsAmplify_app_clientWeb
+      
+      ReadAttributes: !Ref userpoolClientReadAttributes
+      WriteAttributes: !Ref userpoolClientWriteAttributes
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -209,6 +225,9 @@ Resources:
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
       ClientName: !Ref userpoolClientName
+      
+      ReadAttributes: !Ref userpoolClientReadAttributes
+      WriteAttributes: !Ref userpoolClientWriteAttributes
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
@@ -325,7 +344,7 @@ Resources:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties: 
-      IdentityPoolName: cognito87879480_identitypool_87879480
+      IdentityPoolName: PingPongBracketsAmplify
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient

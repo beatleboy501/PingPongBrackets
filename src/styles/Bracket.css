@@ -1,6 +1,19 @@
-main {
+main{
+  display: block;
+}
+
+#bracket {
   display: flex;
   flex-direction: row;
+}
+
+.bracket-header {
+  margin: 2rem;
+  margin-top: 4rem;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center
 }
 
 .round {

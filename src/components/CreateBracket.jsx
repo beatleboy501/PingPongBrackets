@@ -8,6 +8,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import Typeahead from './Typeahead';
+import {Auth} from 'aws-amplify';
 
 class CreateBracket extends React.Component {
   constructor(props) {
@@ -15,28 +17,56 @@ class CreateBracket extends React.Component {
     const selectValue = Object.keys(FORMATS)[0];
     this.state = {
       title: "",
+      users: [],
+      suggestions: [],
       selectValue
     };
     this.goBack = this.goBack.bind(this);
     this.submit = this.submit.bind(this);
     this.updateInputValue = this.updateInputValue.bind(this);
-    this.updateSelectValue = this.updateSelectValue.bind(this)
-    this.renderEntryInputs = this.renderEntryInputs.bind(this)
+    this.updateSelectValue = this.updateSelectValue.bind(this);
+    this.renderEntryInputs = this.renderEntryInputs.bind(this);
+  }
+
+  async componentDidMount() {
+    this.owner = await Auth.currentAuthenticatedUser()
+    await fetch("https://83yeog1v01.execute-api.us-east-1.amazonaws.com/mock/api/user/list", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    .then((res) => res.json())
+    .then(suggestions => this.setState({ suggestions }))
+    .catch((err) => {
+      console.error(err);
+      alert("Something went wrong")
+    })
+  }
+
+  updateEntry(seed, selectedUser) {
+    const { users } = this.state;
+    let newUsers = users.slice();
+    newUsers[seed] = selectedUser;
+    this.setState({users: newUsers});
   }
 
   renderEntryInputs() {
-    const {selectValue} = this.state;
+    const {selectValue, suggestions} = this.state;
+    const suggestionOpts = suggestions.map(suggestion => {
+      return { // TODO: make this look like what the Lambda function is expecting
+        label: `${suggestion.given_name} ${suggestion.family_name}`,
+        given_name: suggestion.given_name,
+        family_name: suggestion.family_name,
+        id: suggestion.sub,
+        value: suggestion.sub
+      }
+    })
     const seeds = [];
     for (let i = 0; i < FORMATS[selectValue].users; i++) {
       seeds.push(
-        <li key={`seed-${i}`}>
-          <TextField
-            label={`Seed ${Number.parseInt(i) + 1}`}
-            type="text"
-            name={`seed-${i}`}
-            margin="normal"
-            variant="outlined"
-          />
+        <li key={`seed-${i + 1}`}>
+          <Typeahead seed={i + 1} onChange={this.updateEntry.bind(this, i)} suggestions={suggestionOpts} />
         </li>
       )
     }
@@ -62,23 +92,28 @@ class CreateBracket extends React.Component {
 
   submit(e) {
     e.preventDefault();
-    const {title} = this.state;
-    fetch("https://o76r421szk.execute-api.us-east-1.amazonaws.com/mock-api/bracket/create", {
+    let {title, users} = this.state;
+    users = users.map((user, index) => {
+      const seed = index + 1;
+      return { // TODO: change this to use the real user info
+        id: user.id,
+        given_name: user.given_name,
+        family_name: user.family_name,
+        seed: seed,
+        rank: seed
+      }
+    });
+    fetch("https://83yeog1v01.execute-api.us-east-1.amazonaws.com/mock/api/bracket/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({title: title})
+      body: JSON.stringify({ title: title, users: users, owner: this.owner.attributes.sub })
     })
-      .then((res) => {
-        return res.json()
-
-      })
-      .then(json => {
-        navigate(`bracket/${title}`, {state: json})
-      })
+      .then((res) => res.json())
+      .then(json => navigate(`bracket/${json.bracket.id}`))
       .catch((err) => {
-        console.error(err)
+        console.error(err);
         alert("Something went wrong in Creating Bracket")
       })
   }

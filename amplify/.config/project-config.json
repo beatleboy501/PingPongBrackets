@@ -1,7 +1,7 @@
 {
     "projectName": "PingPongBrackets",
-    "projectPath": "/Users/aallis/Site/PingPongBrackets",
-    "defaultEditor": "idea14ce",
+    "projectPath": "/Users/aallis/PingPongBrackets",
+    "defaultEditor": "atom",
     "frontendHandler": {
         "javascript": "/usr/local/lib/node_modules/@aws-amplify/cli/node_modules/amplify-frontend-javascript"
     },

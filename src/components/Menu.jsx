@@ -5,15 +5,31 @@ import {Auth} from 'aws-amplify';
 import Button from '@material-ui/core/Button';
 
 const Menu = () => {
-  const options = {createNewBracket: "createNewBracket", viewMyBrackets: "viewMyBrackets"};
+  const options = {
+    createNewBracket: "createNewBracket",
+    viewMyBrackets: "viewMyBrackets",
+    viewUsers: "viewUsers"
+  };
 
   const clickHandler = (e, option) => {
     e.preventDefault();
-    option === options.createNewBracket ? navigate('create-bracket') : navigate('my-brackets');
+    switch (option) {
+      case options.createNewBracket:
+        navigate('create-bracket');
+        break;
+      case options.viewMyBrackets:
+        navigate('my-brackets');
+        break;
+      case options.viewUsers:
+        navigate('users');
+        break;
+      default:
+        break;
+    }
   };
 
   const signOut = async () => {
-    await Auth.signOut()
+    await Auth.signOut();
   };
 
   return (
@@ -33,6 +49,14 @@ const Menu = () => {
         color="primary"
       >
         View My Brackets
+      </Button>
+      <Button
+        onClick={(e) => clickHandler(e, options.viewUsers)}
+        type="button"
+        variant="contained"
+        color="primary"
+      >
+        View Users
       </Button>
       <Button
         onClick={signOut}
