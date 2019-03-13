@@ -11,6 +11,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PersonIcon from '@material-ui/icons/Person';
 import TextField from "@material-ui/core/es/TextField/TextField";
 import blue from '@material-ui/core/colors/blue';
+import { ApiConsumer } from '../providers/InvokeApiContext'
 import { withStyles } from '@material-ui/core/styles';
 
 
@@ -41,18 +42,15 @@ const UnableToUpdateResult = ({currentResult, classes, onClose}) => {
   );
 };
 
-const GameResultDialog = (props) => {
+const renderDialog = (props, base) => {
   if(!props) return;
   let state = {loserScore: null, winnerScore: null}
-  const { classes, currentResult, onClose } = props;
+  const { classes, currentResult, onClose, onSave } = props;
   if (!currentResult.winner || !currentResult.loser) return  <UnableToUpdateResult {...props} />;
-
   const handleUpdateScore = (participant, score) => {
     state[participant] = score
   }
-
   const handleSave = async () => {
-    console.log(currentResult)
     const body = {
       nextGameId: currentResult.game.next_game,
       result: {
@@ -66,17 +64,16 @@ const GameResultDialog = (props) => {
         }
       }
     }
-    const updatedGame = await fetch(`https://83yeog1v01.execute-api.us-east-1.amazonaws.com/mock/api/game/${currentResult.game.id}`, {
+    const updatedGame = await fetch(`${base}/game/${currentResult.game.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
     body: JSON.stringify(body)
     }).then(res => res.json()).then(data => {
-      console.log(data)
-      return data.map(d => d["Attributes"])
+      onSave(data.map(d => d["Attributes"]))
+      onClose()
     }).catch(err => console.error(err))
-    onClose()
   }
   return (
     <Dialog open={currentResult.open} classes={{paper: classes.dialogPaper}}>
@@ -124,6 +121,15 @@ const GameResultDialog = (props) => {
       </div>
     </Dialog>
   );
+}
+
+const GameResultDialog = (props) => {
+  // {({base}) => renderDialog(props, base)}
+  return (
+    <ApiConsumer>
+      {({base}) => renderDialog(props, base)}
+    </ApiConsumer>
+  )
 };
 
 export default withStyles(styles)(GameResultDialog);

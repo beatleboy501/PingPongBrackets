@@ -49,12 +49,14 @@ class Bracket extends Component {
   renderTournament() {
     const tournament = [];
     let { rounds } = this.state;
-    rounds.forEach((round, index) => {
+    Object.keys(rounds).forEach((key) => {
+      const index = parseInt(key);
+      const round = rounds[index];
       const gameList = [];
       round.forEach(game => {
         const {participants} = game;
-        const top = this.findUserById(participants[0]);
-        const bottom = this.findUserById(participants[1]);
+        const top = participants && participants.length ? this.findUserById(participants[0]): null;
+        const bottom = participants && participants.length ? this.findUserById(participants[1]): null;
         gameList.push(
           <React.Fragment key={Math.random()}>
             <li className="spacer">&nbsp;</li>
@@ -99,10 +101,15 @@ class Bracket extends Component {
     this.setState({currentResult: {open: false}});
   }
 
+  handleSave(updatedGames){
+    debugger
+  }
+
   renderDialog() {
     const {currentResult} = this.state;
     return (
       <GameResultDialog
+        onSave={this.handleSave}
         currentResult={currentResult}
         onClose={this.handleCloseDialog}
       />
@@ -127,7 +134,7 @@ class Bracket extends Component {
       <main>
         {this.state.bracket.id && this.renderBracketHeader()}
         <div id="bracket">
-          {this.state.rounds.length && this.renderTournament()}
+          {Object.keys(this.state.rounds).length && this.renderTournament()}
           {this.state.currentResult.open && this.renderDialog()}
         </div>
       </main>

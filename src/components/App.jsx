@@ -1,17 +1,20 @@
 import React from 'react';
 import {Router} from '@reach/router';
 import {withAuthenticator} from 'aws-amplify-react';
-import {CreateRoute, NotFoundRoute, MenuRoute, ViewRoute, ViewUsersRoute} from './routes'
+import {CreateRoute, NotFoundRoute, MenuRoute, ViewRoute, ViewUsersRoute} from './routes';
+import ApiProvider from '../providers/InvokeApiContext';
 
 const App = (props) => {
   return (
-    <Router>
-    <MenuRoute path="/" />
-    <CreateRoute path="/create-bracket"/>
-    <ViewRoute path="/bracket/:bracketId"/>
-    <ViewUsersRoute path="/users" />
-    <NotFoundRoute default/>
-    </Router>
+    <ApiProvider>
+      <Router>
+        <MenuRoute path="/" />
+        <CreateRoute path="/create-bracket"/>
+        <ViewRoute path="/bracket/:bracketId"/>
+        <ViewUsersRoute path="/users" />
+        <NotFoundRoute default/>
+      </Router>
+    </ApiProvider>
   )
 };
 

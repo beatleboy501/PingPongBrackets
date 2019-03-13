@@ -19,9 +19,9 @@ const ellipsis = {
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    height: 250,
     minWidth: '7rem',
-    cursor: 'default'
+    cursor: 'default',
+    width: '12rem'
   },
   input: {
     display: "flex",
@@ -48,11 +48,8 @@ const styles = theme => ({
     fontSize: 16
   },
   paper: {
-    position: "absolute",
     zIndex: 1,
-    marginTop: theme.spacing.unit,
-    left: 0,
-    right: 0
+    position: 'fixed'
   }
 });
 
@@ -176,12 +173,6 @@ class Typeahead extends React.Component {
 
   render() {
     const { classes, theme, seed, suggestions } = this.props;
-
-    // const options = suggestions.map(suggestion => ({
-    //   value: suggestion.label,
-    //   label: suggestion.label
-    // }));
-
     const selectStyles = {
       input: base => ({
         ...base,

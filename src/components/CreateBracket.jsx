@@ -95,7 +95,7 @@ class CreateBracket extends React.Component {
     let {title, users} = this.state;
     users = users.map((user, index) => {
       const seed = index + 1;
-      return { // TODO: change this to use the real user info
+      return {
         id: user.id,
         given_name: user.given_name,
         family_name: user.family_name,
