@@ -1,7 +1,8 @@
 import React from 'react'
+import { ApiConsumer } from '../providers/InvokeApiContext'
 import '../styles/ViewUsers.css'
 
-export default class ViewUsers extends React.Component {
+class ViewUsers extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -10,7 +11,8 @@ export default class ViewUsers extends React.Component {
   }
 
   async componentWillMount() {
-    await fetch("https://83yeog1v01.execute-api.us-east-1.amazonaws.com/mock/api/user/list", {
+    const {base} = this.props;
+    await fetch(`${base}/user/list`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -36,8 +38,18 @@ export default class ViewUsers extends React.Component {
   render() {
     return(
       <ul id="users">
-      {this.renderUsers()}
+        {this.renderUsers()}
       </ul>
     )
   }
 }
+
+const ViewUsersElement = (props) => {
+  return(
+    <ApiConsumer>
+    {({base}) => (<ViewUsers base={base} {...props} />)}
+    </ApiConsumer>
+  )
+}
+
+export default ViewUsersElement;

@@ -1,8 +1,7 @@
 import React from 'react';
 import {navigate} from "@reach/router"
-import '../styles/Menu.css';
-import {Auth} from 'aws-amplify';
 import Button from '@material-ui/core/Button';
+import '../styles/Menu.css';
 
 const Menu = () => {
   const options = {
@@ -26,10 +25,6 @@ const Menu = () => {
       default:
         break;
     }
-  };
-
-  const signOut = async () => {
-    await Auth.signOut();
   };
 
   return (
@@ -57,14 +52,6 @@ const Menu = () => {
         color="primary"
       >
         View Users
-      </Button>
-      <Button
-        onClick={signOut}
-        type="button"
-        variant="contained"
-        color="secondary"
-      >
-        Sign Out
       </Button>
     </div>
   )

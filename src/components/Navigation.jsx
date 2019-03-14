@@ -1,7 +1,7 @@
 import React from "react";
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
+import {navigate} from "@reach/router"
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,8 +16,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import Apps from '@material-ui/icons/Apps';
+import ExitToApp from '@material-ui/icons/ExitToApp';
+import {Auth} from 'aws-amplify';
 
 const drawerWidth = 240;
 
@@ -89,7 +90,7 @@ const styles = theme => ({
   },
 });
 
-class Header extends React.Component {
+class Navigation extends React.Component {
   state = {
     open: false,
   }
@@ -101,6 +102,34 @@ class Header extends React.Component {
   handleDrawerClose = () => {
     this.setState({ open: false });
   };
+
+  signOut = async () => {
+    await Auth.signOut();
+  };
+
+  mainMenu = () => {
+    navigate('/');
+  }
+
+  renderIcons = () => {
+    return ['Main Menu', 'Sign Out'].map((text, index) => {
+      return index % 2 === 0 ? (
+        <ListItem button key={text} onClick={this.mainMenu}>
+        <ListItemIcon>
+        <Apps />
+        </ListItemIcon>
+        <ListItemText primary={text} />
+        </ListItem>
+      ) : (
+        <ListItem button key={text} onClick={this.signOut}>
+        <ListItemIcon>
+        <ExitToApp />
+        </ListItemIcon>
+        <ListItemText primary={text} />
+        </ListItem>
+      )
+    })
+  }
 
   render(){
     const { pageTitle, classes, theme } = this.props;
@@ -148,21 +177,7 @@ class Header extends React.Component {
           </div>
           <Divider />
           <List>
-            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            {this.renderIcons()}
           </List>
         </Drawer>
       </div>
@@ -170,4 +185,4 @@ class Header extends React.Component {
   }
 };
 
-export default withStyles(styles, {withTheme: true})(Header);
+export default withStyles(styles, {withTheme: true})(Navigation);

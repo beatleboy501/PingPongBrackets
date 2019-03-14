@@ -27,7 +27,10 @@ const styles = {
   },
   scoreInput: {
     width: '5rem'
-  }
+  },
+  button: {
+    margin: '2rem',
+  },
 };
 
 const UnableToUpdateResult = ({currentResult, classes, onClose}) => {
@@ -45,13 +48,19 @@ const UnableToUpdateResult = ({currentResult, classes, onClose}) => {
 const renderDialog = (props, base) => {
   if(!props) return;
   let state = {loserScore: null, winnerScore: null}
-  const { classes, currentResult, onClose, onSave } = props;
+  const { bracketId, classes, currentResult, onClose, onSave } = props;
   if (!currentResult.winner || !currentResult.loser) return  <UnableToUpdateResult {...props} />;
   const handleUpdateScore = (participant, score) => {
     state[participant] = score
   }
   const handleSave = async () => {
+    debugger
+    if(parseInt(state.loserScore) > parseInt(state.winnerScore)) {
+      alert("Loser's Score cannot be higher than the Winner's Score")
+      return
+    }
     const body = {
+      bracketId: bracketId,
       nextGameId: currentResult.game.next_game,
       result: {
         winner: {
@@ -64,17 +73,17 @@ const renderDialog = (props, base) => {
         }
       }
     }
-    const updatedGame = await fetch(`${base}/game/${currentResult.game.id}`, {
+    await fetch(`${base}/game/${currentResult.game.id}`, { // TODO: If game already has a result, update the entire bracket
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
       },
-    body: JSON.stringify(body)
+      body: JSON.stringify(body)
     }).then(res => res.json()).then(data => {
       onSave(data.map(d => d["Attributes"]))
       onClose()
     }).catch(err => console.error(err))
-  }
+}
   return (
     <Dialog open={currentResult.open} classes={{paper: classes.dialogPaper}}>
       <DialogTitle>Round: {currentResult.game && currentResult.game.round_name}</DialogTitle>
@@ -94,6 +103,7 @@ const renderDialog = (props, base) => {
             label="Score"
             margin="normal"
             variant="outlined"
+            type="number"
             onChange={(e) => handleUpdateScore("winnerScore", e.target.value)}
           />
         </ListItem>
@@ -111,20 +121,20 @@ const renderDialog = (props, base) => {
             label="Score"
             margin="normal"
             variant="outlined"
+            type="number"
             onChange={(e) => handleUpdateScore("loserScore", e.target.value)}
           />
         </ListItem>
       </List>
       <div>
-        <Button onClick={onClose}>Close</Button>
-        <Button onClick={handleSave}>Save</Button>
+        <Button className={classes.button} variant="contained" onClick={onClose}>Close</Button>
+        <Button className={classes.button} variant="contained" onClick={handleSave}>Save</Button>
       </div>
     </Dialog>
   );
 }
 
 const GameResultDialog = (props) => {
-  // {({base}) => renderDialog(props, base)}
   return (
     <ApiConsumer>
       {({base}) => renderDialog(props, base)}
