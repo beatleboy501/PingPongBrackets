@@ -1,5 +1,6 @@
 import React from 'react'
 import { ApiConsumer } from '../providers/InvokeApiContext'
+import Card from './Card.jsx'
 import '../styles/ViewUsers.css'
 
 class ViewUsers extends React.Component {
@@ -8,6 +9,7 @@ class ViewUsers extends React.Component {
     this.state = {
       users: []
     }
+    this.contact = this.contact.bind(this);
   }
 
   async componentWillMount() {
@@ -28,19 +30,25 @@ class ViewUsers extends React.Component {
     })
   }
 
-  renderUsers() {
-    const {users} = this.state;
-    return users.map(user => {
-      return (<li key={user.sub}>{user.given_name} {user.family_name}</li>)
-    })
+  contact(email) {
+    window.open(`mailto:${email}?subject=Ping%20Pong%20Brackets`, '_blank');
   }
 
   render() {
-    return(
-      <ul id="users">
-        {this.renderUsers()}
-      </ul>
-    )
+    const {users} = this.state;
+    return users.map(user => {
+      return (
+        <Card
+          key={user.sub}
+          titleText={`${user.given_name} ${user.family_name}`}
+          paragraphText={user.email}
+          buttonProps={{
+            label: "Contact",
+            onClick: () => this.contact(user.email)
+          }}
+        />
+      )
+    })
   }
 }
 

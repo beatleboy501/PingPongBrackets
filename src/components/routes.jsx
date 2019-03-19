@@ -4,6 +4,7 @@ import Menu from "./Menu";
 import React from "react";
 import Navigation from "./Navigation";
 import ViewUsers from './ViewUsers';
+import ViewBrackets from './ViewBrackets';
 
 const withNavigation = (pageTitle, component) => {
   return (
@@ -24,10 +25,13 @@ const NotFoundRoute = () => <div>Sorry, nothing here.</div>;
 
 const ViewUsersRoute = () => withNavigation("Users", <ViewUsers />)
 
+const ViewBracketsRoute = () => withNavigation("Brackets", <ViewBrackets />)
+
 export {
   ViewRoute,
   CreateRoute,
   MenuRoute,
   NotFoundRoute,
+  ViewBracketsRoute,
   ViewUsersRoute,
 }

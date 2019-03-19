@@ -10,6 +10,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
 import Typeahead from './Typeahead';
 import {Auth} from 'aws-amplify';
+import { ApiConsumer } from '../providers/InvokeApiContext';
 
 class CreateBracket extends React.Component {
   constructor(props) {
@@ -30,7 +31,8 @@ class CreateBracket extends React.Component {
 
   async componentDidMount() {
     this.owner = await Auth.currentAuthenticatedUser()
-    await fetch("https://83yeog1v01.execute-api.us-east-1.amazonaws.com/mock/api/user/list", {
+    const { base } = this.props;
+    await fetch(`${base}/user/list`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -54,7 +56,7 @@ class CreateBracket extends React.Component {
   renderEntryInputs() {
     const {selectValue, suggestions} = this.state;
     const suggestionOpts = suggestions.map(suggestion => {
-      return { // TODO: make this look like what the Lambda function is expecting
+      return {
         label: `${suggestion.given_name} ${suggestion.family_name}`,
         given_name: suggestion.given_name,
         family_name: suggestion.family_name,
@@ -64,11 +66,7 @@ class CreateBracket extends React.Component {
     })
     const seeds = [];
     for (let i = 0; i < FORMATS[selectValue].users; i++) {
-      seeds.push(
-        <li key={`seed-${i + 1}`}>
-          <Typeahead seed={i + 1} onChange={this.updateEntry.bind(this, i)} suggestions={suggestionOpts} />
-        </li>
-      )
+      seeds.push(<Typeahead key={`seed-${i + 1}`} seed={i + 1} onChange={this.updateEntry.bind(this, i)} suggestions={suggestionOpts} />)
     }
     return seeds;
   }
@@ -93,6 +91,7 @@ class CreateBracket extends React.Component {
   submit(e) {
     e.preventDefault();
     let {title, users} = this.state;
+    const { base } = this.props;
     users = users.map((user, index) => {
       const seed = index + 1;
       return {
@@ -103,7 +102,7 @@ class CreateBracket extends React.Component {
         rank: seed
       }
     });
-    fetch("https://83yeog1v01.execute-api.us-east-1.amazonaws.com/mock/api/bracket/create", {
+    fetch(`${base}/bracket/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -134,7 +133,7 @@ class CreateBracket extends React.Component {
     return (
       <div id="create-bracket">
         <form>
-          <div>
+          <div id="bracket-info">
             <TextField
               name="title"
               label="Bracket Title"
@@ -160,9 +159,9 @@ class CreateBracket extends React.Component {
               </Select>
             </FormControl>
           </div>
-          <ul id="bracket-users">
+          <div id="entry-inputs">
             {this.renderEntryInputs()}
-          </ul>
+          </div>
           <div>
             <Button
               type="button"
@@ -189,4 +188,12 @@ class CreateBracket extends React.Component {
   }
 }
 
-export default CreateBracket;
+const CreateBracketElement = (props) => {
+  return(
+    <ApiConsumer>
+    {({base}) => <CreateBracket base={base} {...props}/>}
+    </ApiConsumer>
+  )
+}
+
+export default CreateBracketElement;

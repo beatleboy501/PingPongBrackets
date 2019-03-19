@@ -16,7 +16,7 @@
 }
 
 #create-bracket form .bracket-title {
-    width: 25rem;
+    width: 20rem;
     margin: 1rem;
 }
 
@@ -37,17 +37,32 @@
     margin: 1rem;
 }
 
-ul#bracket-users {
-    list-style-type: none;
-    -moz-column-count: 2;
-    -moz-column-gap: 20px;
-    -webkit-column-count: 2;
-    -webkit-column-gap: 20px;
-    column-count: 2;
-    column-gap: 20px;
-    overflow: auto;
+#entry-inputs, #bracket-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  flex-wrap: wrap;
 }
 
-ul#bracket-users li {
-  margin: 0 2rem 2rem;
+#bracket-info {
+  min-height: 10rem;
+  max-width: 50%;
+}
+
+#entry-inputs {
+  max-width: 70%;
+}
+
+#entry-inputs > div {
+  margin: 0 1rem;
+  max-width: 10rem;
+}
+
+div[class^="Typeahead-valueContainer"] {
+  max-height: 2rem;
+}
+
+div[class^="MuiInputBase-input-"] div[class^="css-"] {
+  cursor: default;
 }

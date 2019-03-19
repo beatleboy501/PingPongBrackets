@@ -1,7 +1,7 @@
 import React from 'react';
 import {Router} from '@reach/router';
 import {withAuthenticator} from 'aws-amplify-react';
-import {CreateRoute, NotFoundRoute, MenuRoute, ViewRoute, ViewUsersRoute} from './routes';
+import {CreateRoute, NotFoundRoute, MenuRoute, ViewRoute, ViewBracketsRoute, ViewUsersRoute} from './routes';
 import ApiProvider from '../providers/InvokeApiContext';
 
 const App = (props) => {
@@ -9,9 +9,10 @@ const App = (props) => {
     <ApiProvider>
       <Router>
         <MenuRoute path="/" />
-        <CreateRoute path="/create-bracket"/>
+        <CreateRoute path="/new"/>
         <ViewRoute path="/bracket/:bracketId"/>
         <ViewUsersRoute path="/users" />
+        <ViewBracketsRoute path="/brackets"/>
         <NotFoundRoute default/>
       </Router>
     </ApiProvider>

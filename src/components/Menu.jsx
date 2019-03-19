@@ -3,21 +3,21 @@ import {navigate} from "@reach/router"
 import Button from '@material-ui/core/Button';
 import '../styles/Menu.css';
 
-const Menu = () => {
-  const options = {
-    createNewBracket: "createNewBracket",
-    viewMyBrackets: "viewMyBrackets",
-    viewUsers: "viewUsers"
-  };
+const options = {
+  createNewBracket: "createNewBracket",
+  viewMyBrackets: "viewMyBrackets",
+  viewUsers: "viewUsers"
+};
 
+const Menu = () => {
   const clickHandler = (e, option) => {
     e.preventDefault();
     switch (option) {
       case options.createNewBracket:
-        navigate('create-bracket');
+        navigate('new');
         break;
       case options.viewMyBrackets:
-        navigate('my-brackets');
+        navigate('brackets');
         break;
       case options.viewUsers:
         navigate('users');
