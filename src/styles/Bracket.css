@@ -56,14 +56,18 @@ li.game span {
 }
 
 li.game-top {
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid #232F3E;
 }
 
 li.game-spacer {
-  border-right: 1px solid #aaa;
+  border-right: 1px solid #232F3E;
   min-height: 40px;
 }
 
 li.game-bottom {
-  border-top: 1px solid #aaa;
+  border-top: 1px solid #232F3E;
+}
+
+li.game-top:hover, li.game-bottom:hover {
+  color: greenyellow;
 }

@@ -30,6 +30,7 @@ class ViewBrackets extends React.Component {
       ]
     }
     await this.setState({brackets})
+    window.scrollTo(0,0);
     // const { base } = this.props;
     // this.owner = await Auth.currentAuthenticatedUser()
     // const userId = this.owner.attributes.sub

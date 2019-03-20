@@ -28,6 +28,7 @@ class ViewUsers extends React.Component {
       console.error(err);
       alert("Something went wrong")
     })
+    window.scrollTo(0,0);
   }
 
   contact(email) {

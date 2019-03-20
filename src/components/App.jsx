@@ -3,64 +3,36 @@ import {Router} from '@reach/router';
 import {withAuthenticator} from 'aws-amplify-react';
 import {CreateRoute, NotFoundRoute, MenuRoute, ViewRoute, ViewBracketsRoute, ViewUsersRoute} from './routes';
 import ApiProvider from '../providers/InvokeApiContext';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import themeConfig from '../conf/theme'
+import signUpConfig from '../conf/signUp'
+
+const theme = createMuiTheme(themeConfig);
 
 const App = (props) => {
   return (
-    <ApiProvider>
-      <Router>
-        <MenuRoute path="/" />
-        <CreateRoute path="/new"/>
-        <ViewRoute path="/bracket/:bracketId"/>
-        <ViewUsersRoute path="/users" />
-        <ViewBracketsRoute path="/brackets"/>
-        <NotFoundRoute default/>
-      </Router>
-    </ApiProvider>
+    <MuiThemeProvider theme={theme}>
+      <ApiProvider>
+        <Router>
+          <MenuRoute path="/" />
+          <CreateRoute path="/new"/>
+          <ViewRoute path="/bracket/:bracketId"/>
+          <ViewUsersRoute path="/users" />
+          <ViewBracketsRoute path="/brackets"/>
+          <NotFoundRoute default/>
+        </Router>
+      </ApiProvider>
+    </MuiThemeProvider>
   )
 };
 
-const config = {
-  header: 'Welcome!',
-  defaultCountryCode: '1',
-  hideDefaults: true,
-  hiddenDefaults: ['phone_number'],
-  signUpFields: [
-    {
-      label: 'Username',
-      key: 'username',
-      required: true,
-      displayOrder: 1,
-      type: 'string',
-    },
-    {
-      label: 'Password',
-      key: 'password',
-      required: true,
-      displayOrder: 2,
-      type: 'password',
-    },
-    {
-      label: 'Email',
-      key: 'email',
-      required: true,
-      displayOrder: 3,
-      type: 'email',
-    },
-    {
-      label: 'First Name',
-      key: 'given_name',
-      required: true,
-      displayOrder: 4,
-      type: 'string',
-    },
-    {
-      label: 'Second Name',
-      key: 'family_name',
-      required: true,
-      displayOrder: 5,
-      type: 'string',
-    },
-  ]
-}
-
-export default withAuthenticator(App, { includeGreetings: false, authenticatorComponents: [], federated: null, theme: null, signUpConfig: config });
+export default withAuthenticator(
+  App,
+  {
+    includeGreetings: false,
+    authenticatorComponents: [],
+    federated: null,
+    theme: null,
+    signUpConfig: signUpConfig
+  }
+);

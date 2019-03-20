@@ -44,6 +44,7 @@ class CreateBracket extends React.Component {
       console.error(err);
       alert("Something went wrong")
     })
+    window.scrollTo(0,0);
   }
 
   updateEntry(seed, selectedUser) {
@@ -167,7 +168,7 @@ class CreateBracket extends React.Component {
               type="button"
               className="cancel-button"
               variant="contained"
-              color="secondary"
+              color="default"
               onClick={this.goBack}
             >
               Cancel

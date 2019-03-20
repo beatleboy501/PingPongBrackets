@@ -1,0 +1,10 @@
+{
+  "palette": {
+    "primary": { "main":  "#ffac31" },
+    "secondary": { "main":  "#31465f" },
+    "cancel": { "main": "#dd3f5b"}
+  },
+  "typography": {
+    "useNextVariants": true
+  }
+}

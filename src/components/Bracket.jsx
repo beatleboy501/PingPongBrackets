@@ -32,7 +32,7 @@ class Bracket extends Component {
 
   async componentWillMount() {
     const { bracketId, base } = this.props;
-    const bracket = await fetch(`${base}/bracket/${bracketId}`, {
+    await fetch(`${base}/bracket/${bracketId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -40,7 +40,7 @@ class Bracket extends Component {
     }).then(res => res.json()).then(data => {
       return this.setState({...data})
     }).catch(err => console.error(err))
-    return bracket
+    window.scrollTo(0,0);
   }
 
   findUserById(id) {
