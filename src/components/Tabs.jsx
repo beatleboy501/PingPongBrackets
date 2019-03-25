@@ -5,10 +5,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import {styles, tabContainerStyles} from '../styles/Tabs';
 
 function TabContainer(props) {
   return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
+    <Typography component="div" style={tabContainerStyles}>
       {props.children}
     </Typography>
   );
@@ -17,13 +18,6 @@ function TabContainer(props) {
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
 };
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-});
 
 class SimpleTabs extends React.Component {
   constructor(props) {
@@ -37,7 +31,7 @@ class SimpleTabs extends React.Component {
 
   handleChange(event, value) {
     this.setState({ value });
-  };
+  }
 
   renderTabs() {
     const { content } = this.props;
@@ -53,7 +47,7 @@ class SimpleTabs extends React.Component {
     const { content } = this.props;
     const tabContainers = content.map(tab => {
       return(
-        <TabContainer>
+        <TabContainer key={Math.random()}>
           {tab.children}
         </TabContainer>
       )
@@ -84,6 +78,10 @@ class SimpleTabs extends React.Component {
 
 SimpleTabs.propTypes = {
   classes: PropTypes.object.isRequired,
+  content: PropTypes.arrayOf(PropTypes.shape({
+    children: PropTypes.arrayOf(PropTypes.object),
+    label: PropTypes.string
+  }))
 };
 
 export default withStyles(styles)(SimpleTabs);

@@ -1,4 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
+const propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ])
+}
 
 // Set Up The Initial Context
 const InvokeApiContext = React.createContext();
@@ -13,14 +21,22 @@ class ApiProvider extends React.Component {
   }
 
   render() {
+    const { children } = this.props;
     return (
       // value prop is where we define what values
       // that are accessible to consumer components
       <InvokeApiContext.Provider value={this.state}>
-        {this.props.children}
+        {children}
       </InvokeApiContext.Provider>
     )
   }
 }
+
+const defaultProps = {
+  children: null,
+}
+
+ApiProvider.propTypes = propTypes;
+ApiProvider.defaultProps = defaultProps;
 
 export default ApiProvider

@@ -1,9 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Tabs from './Tabs.jsx'
 import Card from './Card.jsx'
 import { ApiConsumer } from '../providers/InvokeApiContext';
 import {Auth} from 'aws-amplify';
 import {navigate} from "@reach/router"
+
+const propTypes = {
+  base: PropTypes.string.isRequired
+}
 
 class ViewBrackets extends React.Component {
   constructor(props) {
@@ -19,29 +24,18 @@ class ViewBrackets extends React.Component {
   }
 
   async componentWillMount() {
-    const brackets = {
-      owned: [
-        {title: "Owned Bracket", owner: "You", participantCount: 4, id: '75f6931d-ae22-4164-8df0-f64d004415fc'},
-        {title: "Owned Bracket Two", owner: "You", participantCount: 8, id: '75f6931d-ae22-4164-8df0-f64d004415fc'}
-      ],
-      participant: [
-        {title: "Participant Bracket", owner: "Not You", participantCount: 16, id: '75f6931d-ae22-4164-8df0-f64d004415fc'},
-        {title: "World Cup", owner: "FIFA", participantCount: 32, id: '75f6931d-ae22-4164-8df0-f64d004415fc'}
-      ]
-    }
-    await this.setState({brackets})
+    const { base } = this.props;
+    this.owner = await Auth.currentAuthenticatedUser()
+    const userId = this.owner.attributes.sub
+    await fetch(`${base}/user/brackets/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).then(res => res.json()).then(brackets => {
+      return this.setState({ brackets })
+    }).catch(err => console.error(err)) /* eslint no-console: 0 */
     window.scrollTo(0,0);
-    // const { base } = this.props;
-    // this.owner = await Auth.currentAuthenticatedUser()
-    // const userId = this.owner.attributes.sub
-    // await fetch(`${base}/user/${userId}/list-brackets`, {
-    //   method: "GET",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   }
-    // }).then(res => res.json()).then(brackets => {
-    //   return this.setState({ brackets })
-    // }).catch(err => console.error(err))
   }
 
   getCard(bracket) {
@@ -52,8 +46,8 @@ class ViewBrackets extends React.Component {
           label: "View Bracket",
           onClick: () => navigate(`bracket/${bracket.id}`)
         }}
-        titleText={bracket.title}
-        subTitleText={bracket.owner}
+        titleText={bracket.title.toString()}
+        subTitleText={bracket.owner.toString()}
         paragraphText={`${bracket.participantCount} Participants`}
       />
     )
@@ -73,6 +67,8 @@ class ViewBrackets extends React.Component {
     return <Tabs content={tabsContent} />
   }
 }
+
+ViewBrackets.propTypes = propTypes;
 
 const ViewBracketsElement = (props) => {
   return(

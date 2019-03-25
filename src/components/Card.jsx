@@ -25,6 +25,17 @@ const styles = {
   },
 };
 
+const propTypes = {
+  classes: PropTypes.object.isRequired,
+  buttonProps: PropTypes.shape({
+    onClick: PropTypes.func,
+    label: PropTypes.string,
+  }),
+  subTitleText: PropTypes.string,
+  titleText: PropTypes.string,
+  paragraphText: PropTypes.string,
+};
+
 function SimpleCard(props) {
   const { classes, buttonProps, subTitleText, titleText, paragraphText } = props;
   return (
@@ -49,8 +60,6 @@ function SimpleCard(props) {
   );
 }
 
-SimpleCard.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+SimpleCard.propTypes = propTypes;
 
 export default withStyles(styles)(SimpleCard);

@@ -9,7 +9,7 @@ import signUpConfig from '../conf/signUp'
 
 const theme = createMuiTheme(themeConfig);
 
-const App = (props) => {
+const App = () => {
   return (
     <MuiThemeProvider theme={theme}>
       <ApiProvider>

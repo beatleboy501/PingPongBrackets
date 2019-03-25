@@ -1,3 +1,29 @@
 {
-    "extends": "airbnb"
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "plugins": [
+    "react"
+  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "15.6.1"
+    }
+  },
+  "globals": {
+    "fetch": true,
+    "console": true,
+    "alert": true,
+    "window": true
+  }
 }

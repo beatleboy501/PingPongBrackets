@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -13,7 +14,6 @@ import TextField from "@material-ui/core/es/TextField/TextField";
 import blue from '@material-ui/core/colors/blue';
 import { ApiConsumer } from '../providers/InvokeApiContext'
 import { withStyles } from '@material-ui/core/styles';
-
 
 const styles = {
   avatar: {
@@ -33,6 +33,14 @@ const styles = {
   },
 };
 
+const propTypes = {
+  bracketId: PropTypes.string.isRequired,
+  classes: PropTypes.objectOf(PropTypes.any),
+  currentResult: PropTypes.objectOf(PropTypes.any),
+  onClose: PropTypes.func,
+  onSave: PropTypes.func,
+}
+
 const UnableToUpdateResult = ({currentResult, classes, onClose}) => {
   return (
     <Dialog open={currentResult.open} classes={{paper: classes.dialogPaper}}>
@@ -45,6 +53,8 @@ const UnableToUpdateResult = ({currentResult, classes, onClose}) => {
   );
 };
 
+UnableToUpdateResult.propTypes = propTypes;
+
 const renderDialog = (props, base) => {
   if(!props) return;
   let state = {loserScore: null, winnerScore: null}
@@ -54,7 +64,6 @@ const renderDialog = (props, base) => {
     state[participant] = score
   }
   const handleSave = async () => {
-    debugger
     if(parseInt(state.loserScore) > parseInt(state.winnerScore)) {
       alert("Loser's Score cannot be higher than the Winner's Score")
       return
@@ -82,7 +91,7 @@ const renderDialog = (props, base) => {
     }).then(res => res.json()).then(data => {
       onSave(data.map(d => d["Attributes"]))
       onClose()
-    }).catch(err => console.error(err))
+    }).catch(err => console.error(err)) /* eslint no-console: 0 */
 }
   return (
     <Dialog open={currentResult.open} classes={{paper: classes.dialogPaper}}>
@@ -134,6 +143,8 @@ const renderDialog = (props, base) => {
   );
 }
 
+renderDialog.propTypes = propTypes;
+
 const GameResultDialog = (props) => {
   return (
     <ApiConsumer>
@@ -141,5 +152,15 @@ const GameResultDialog = (props) => {
     </ApiConsumer>
   )
 };
+
+const defaultProps = {
+  classes: {},
+  currentResult: {},
+  onClose: () => {},
+  onSave: () => {},
+}
+
+GameResultDialog.propTypes = propTypes;
+GameResultDialog.defaultProps = defaultProps;
 
 export default withStyles(styles)(GameResultDialog);

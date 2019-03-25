@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import classNames from 'classnames';
 import {withStyles} from '@material-ui/core/styles';
 import {navigate} from "@reach/router"
@@ -91,6 +92,12 @@ const styles = theme => ({
   },
 });
 
+const propTypes = {
+  pageTitle: PropTypes.string.isRequired,
+  classes: PropTypes.object,
+  theme: PropTypes.object,
+}
+
 class Navigation extends React.Component {
   state = {
     open: false,
@@ -116,17 +123,17 @@ class Navigation extends React.Component {
     return ['Main Menu', 'Sign Out'].map((text, index) => {
       return index % 2 === 0 ? (
         <ListItem button key={text} onClick={this.mainMenu}>
-        <ListItemIcon>
-        <Apps />
-        </ListItemIcon>
-        <ListItemText primary={text} />
+          <ListItemIcon>
+            <Apps />
+          </ListItemIcon>
+          <ListItemText primary={text} />
         </ListItem>
       ) : (
         <ListItem button key={text} onClick={this.signOut}>
-        <ListItemIcon>
-        <ExitToApp />
-        </ListItemIcon>
-        <ListItemText primary={text} />
+          <ListItemIcon>
+            <ExitToApp />
+          </ListItemIcon>
+          <ListItemText primary={text} />
         </ListItem>
       )
     })
@@ -184,6 +191,14 @@ class Navigation extends React.Component {
       </div>
     );
   }
-};
+}
+
+const defaultProps = {
+  classes: {},
+  theme: {},
+}
+
+Navigation.propTypes = propTypes;
+Navigation.defaultProps = defaultProps;
 
 export default withStyles(styles, {withTheme: true})(Navigation);

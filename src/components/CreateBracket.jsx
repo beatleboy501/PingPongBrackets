@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import '../styles/CreateBracket.css';
 import FORMATS from '../constants/NumberOfTeamsFormat';
-import {navigate} from "@reach/router"
+import {navigate} from "@reach/router";
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -11,6 +12,10 @@ import Button from '@material-ui/core/Button';
 import Typeahead from './Typeahead';
 import {Auth} from 'aws-amplify';
 import { ApiConsumer } from '../providers/InvokeApiContext';
+
+const propTypes = {
+  base: PropTypes.string.isRequired,
+}
 
 class CreateBracket extends React.Component {
   constructor(props) {
@@ -41,7 +46,7 @@ class CreateBracket extends React.Component {
     .then((res) => res.json())
     .then(suggestions => this.setState({ suggestions }))
     .catch((err) => {
-      console.error(err);
+      console.error(err) /* eslint no-console: 0 */
       alert("Something went wrong")
     })
     window.scrollTo(0,0);
@@ -113,7 +118,7 @@ class CreateBracket extends React.Component {
       .then((res) => res.json())
       .then(json => navigate(`bracket/${json.bracket.id}`))
       .catch((err) => {
-        console.error(err);
+        console.error(err) /* eslint no-console: 0 */
         alert("Something went wrong in Creating Bracket")
       })
   }
@@ -188,6 +193,8 @@ class CreateBracket extends React.Component {
     );
   }
 }
+
+CreateBracket.propTypes = propTypes;
 
 const CreateBracketElement = (props) => {
   return(

@@ -1,17 +1,17 @@
+import React, { Fragment } from "react";
 import Bracket from "./Bracket";
 import CreateBracket from "./CreateBracket";
 import Menu from "./Menu";
-import React from "react";
 import Navigation from "./Navigation";
 import ViewUsers from './ViewUsers';
 import ViewBrackets from './ViewBrackets';
 
 const withNavigation = (pageTitle, component) => {
   return (
-    <React.Fragment>
+    <Fragment>
       <Navigation pageTitle={pageTitle} />
       {component}
-    </React.Fragment>
+    </Fragment>
   )
 };
 

@@ -1,7 +1,12 @@
-import React from 'react'
-import { ApiConsumer } from '../providers/InvokeApiContext'
-import Card from './Card.jsx'
-import '../styles/ViewUsers.css'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { ApiConsumer } from '../providers/InvokeApiContext';
+import Card from './Card.jsx';
+import '../styles/ViewUsers.css';
+
+const propTypes = {
+  base: PropTypes.string.isRequired,
+}
 
 class ViewUsers extends React.Component {
   constructor(props) {
@@ -25,14 +30,14 @@ class ViewUsers extends React.Component {
     })
     .then(users => this.setState({ users }))
     .catch((err) => {
-      console.error(err);
+      console.error(err); /* eslint no-console: 0 */
       alert("Something went wrong")
     })
     window.scrollTo(0,0);
   }
 
   contact(email) {
-    window.open(`mailto:${email}?subject=Ping%20Pong%20Brackets`, '_blank');
+    window.open(`mailto:${email}?subject=Ping%20Pong%20Brackets`, '_blank')
   }
 
   render() {
@@ -52,6 +57,8 @@ class ViewUsers extends React.Component {
     })
   }
 }
+
+ViewUsers.propTypes = propTypes;
 
 const ViewUsersElement = (props) => {
   return(

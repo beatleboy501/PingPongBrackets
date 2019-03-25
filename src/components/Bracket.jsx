@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import GameResultDialog from "./GameResultDialog";
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
@@ -6,7 +7,45 @@ import { ApiConsumer } from '../providers/InvokeApiContext';
 import BracketGame from './BracketGame';
 import BracketRound from './BracketRound';
 import LoadingWidget from './LoadingWidget';
-import '../styles/Bracket.css';
+import BracketWinner from './BracketWinner';
+import { withStyles } from '@material-ui/core/styles';
+
+const propTypes = {
+  bracketId: PropTypes.string.isRequired,
+  base: PropTypes.string.isRequired,
+  classes: PropTypes.object
+}
+
+const styles = {
+  main: {
+    display: 'block',
+    fontFamily: 'sans-serif',
+    fontSize: 'small',
+    padding: 10,
+    lineHeight: '1.4em'
+  },
+  bracket: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  bracketHeader: {
+    margin: '2rem',
+    marginTop: '4rem',
+    padding: '2rem',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  round: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '200px',
+    listStyle: 'none',
+    padding: 0,
+    cursor: 'default'
+  }
+}
 
 class Bracket extends Component {
   constructor(props){
@@ -39,7 +78,7 @@ class Bracket extends Component {
       }
     }).then(res => res.json()).then(data => {
       return this.setState({...data})
-    }).catch(err => console.error(err))
+    }).catch(err => console.error(err)) /* eslint no-console: 0 */
     window.scrollTo(0,0);
   }
 
@@ -96,13 +135,7 @@ class Bracket extends Component {
     });
     const tournamentWinner = (this.state && this.state.bracket && this.state.bracket.winner) ?
       this.findUserById(this.state.bracket.winner) : {given_name: "", family_name: ""}
-    tournament.push( // The Winner
-      <ul className={`round round-${rounds + 1}`} key={`round-${rounds + 1}`}>
-        <li className="spacer">&nbsp;</li>
-        <li className="game game-top">{tournamentWinner.given_name} {tournamentWinner.family_name}</li>
-        <li className="spacer">&nbsp;</li>
-      </ul>,
-    );
+    tournament.push(<BracketWinner tournamentWinner={tournamentWinner} key={Math.random()} />); // The Winner
     return tournament;
   }
 
@@ -115,7 +148,7 @@ class Bracket extends Component {
     let { rounds } = this.state;
     updatedGames.forEach(game => {
       let round = rounds[game.round]
-      const index = round.findIndex(x => x.id === game.id)
+      const index = round.findIndex(r => r.id === game.id)
       round[index] = game
       rounds[game.round] = round
     })
@@ -136,10 +169,11 @@ class Bracket extends Component {
   }
 
   renderBracketHeader() {
-    const { bracket } = this.state
+    const { bracket } = this.state;
+    const { classes } = this.props;
     return(
       <div>
-        <Paper elevation={1} className="bracket-header">
+        <Paper elevation={1} className={classes.bracketHeader}>
           <Typography variant="h5" component="h3">
             {bracket.title.toString()}
           </Typography>
@@ -149,10 +183,11 @@ class Bracket extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     return this.state.bracket && this.state.bracket.id && this.state.rounds && Object.keys(this.state.rounds).length ? (
-      <main>
+      <main className={classes.main}>
         {this.renderBracketHeader()}
-        <div id="bracket">
+        <div className={classes.bracket}>
           {this.renderTournament()}
           {this.state.currentResult.open && this.renderDialog()}
         </div>
@@ -160,6 +195,8 @@ class Bracket extends Component {
     ) : <LoadingWidget />
   }
 }
+
+Bracket.propTypes = propTypes;
 
 const BracketElement = (props) => (
   <ApiConsumer>
@@ -169,4 +206,4 @@ const BracketElement = (props) => (
   </ApiConsumer>
 )
 
-export default BracketElement;
+export default withStyles(styles)(BracketElement);
