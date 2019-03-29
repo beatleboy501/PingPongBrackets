@@ -27,6 +27,7 @@ class CreateBracket extends React.Component {
     this.updateInputValue = this.updateInputValue.bind(this);
     this.updateSelectValue = this.updateSelectValue.bind(this);
     this.renderEntryInputs = this.renderEntryInputs.bind(this);
+    this.isValidSubmission = this.isValidSubmission.bind(this);
   }
 
   async componentDidMount() {
@@ -98,10 +99,21 @@ class CreateBracket extends React.Component {
     navigate('/')
   }
 
+  isValidSubmission(title, users, base) {
+    const { selectValue } = this.state;
+    const filtered = users.filter(u => !!u);
+    const userCountValid = parseInt(filtered.length) === parseInt(FORMATS[selectValue].users);
+    return userCountValid && !!title && !!base;
+  }
+
   handleSubmit(e) {
     e.preventDefault();
     let {title, users} = this.state;
     const { base } = this.props;
+    if(!this.isValidSubmission(title, users, base)) {
+      alert("Invalid Form Submission")
+      return
+    }
     users = users.map((user, index) => {
       const seed = index + 1;
       return {
@@ -112,6 +124,7 @@ class CreateBracket extends React.Component {
         rank: seed
       }
     });
+
     fetch(`${base}/bracket/create`, {
       method: "POST",
       headers: {

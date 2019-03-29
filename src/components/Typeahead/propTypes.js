@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export default {
+export const typeaheadPropTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 };
@@ -76,3 +76,5 @@ export const noOptionsMessagePropTypes = {
   innerProps: PropTypes.object,
   children: PropTypes.any
 }
+
+export default {}

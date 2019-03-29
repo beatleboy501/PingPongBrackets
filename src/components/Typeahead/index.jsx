@@ -2,7 +2,7 @@
 
 import React from "react";
 import styles from './styles';
-import propTypes from './propTypes';
+import typeaheadPropTypes from './propTypes';
 import Menu from './Menu';
 import ValueContainer from './ValueContainer';
 import SingleValue from './SingleValue';
@@ -70,6 +70,6 @@ class Typeahead extends React.Component {
   }
 }
 
-Typeahead.propTypes = propTypes;
+Typeahead.propTypes = typeaheadPropTypes;
 
 export default withStyles(styles, { withTheme: true })(Typeahead);
