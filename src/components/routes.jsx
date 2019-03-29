@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
-import Bracket from "./Bracket";
-import CreateBracket from "./CreateBracket";
-import Menu from "./Menu";
-import Navigation from "./Navigation";
-import ViewUsers from './ViewUsers';
-import ViewBrackets from './ViewBrackets';
+import Bracket from "./Bracket/index";
+import CreateBracket from "./CreateBracket/index";
+import Menu from "./Menu/index";
+import Navigation from "./Navigation/index";
+import ViewUsers from './ViewUsers/index';
+import ViewBrackets from './ViewBrackets/index';
 
 const withNavigation = (pageTitle, component) => {
   return (
