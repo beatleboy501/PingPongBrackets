@@ -1,12 +1,14 @@
 import React from 'react';
 import propTypes from './propTypes';
 import Card from '../Card/index.jsx';
+import LoadingWidget from '../LoadingWidget/index';
 
 class ViewUsers extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      users: []
+      users: [],
+      isLoading: true
     }
     this.contact = this.contact.bind(this);
   }
@@ -20,7 +22,7 @@ class ViewUsers extends React.Component {
       }
     })
     .then(res => res.json())
-    .then(users => this.setState({ users }))
+    .then(users => this.setState({ users, isLoading: false }))
     .catch(err => {
       console.error(err); /* eslint no-console: 0 */
       alert("Something went wrong")
@@ -33,7 +35,8 @@ class ViewUsers extends React.Component {
   }
 
   render() {
-    const {users} = this.state;
+    const {users, isLoading} = this.state;
+    if(isLoading) return <LoadingWidget />;
     return users.map(user => {
       return (
         <Card

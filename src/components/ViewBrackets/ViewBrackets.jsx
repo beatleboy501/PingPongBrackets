@@ -2,6 +2,7 @@ import React from 'react';
 import propTypes from './propTypes';
 import Tabs from '../Tabs/index.jsx';
 import Card from '../Card/index.jsx';
+import LoadingWidget from '../LoadingWidget/index';
 import {Auth} from 'aws-amplify';
 import {navigate} from "@reach/router";
 
@@ -12,7 +13,8 @@ class ViewBrackets extends React.Component {
       brackets: {
         owned: [],
         participant: []
-      }
+      },
+      isLoading: true,
     }
     this.owner = null
     this.getCard = this.getCard.bind(this)
@@ -28,7 +30,7 @@ class ViewBrackets extends React.Component {
         "Content-Type": "application/json"
       }
     }).then(res => res.json()).then(brackets => {
-      return this.setState({ brackets })
+      return this.setState({ brackets, isLoading: false })
     }).catch(err => console.error(err)) /* eslint no-console: 0 */
     window.scrollTo(0,0);
   }
@@ -49,7 +51,8 @@ class ViewBrackets extends React.Component {
   }
 
   render() {
-    const {brackets} = this.state;
+    const {brackets, isLoading} = this.state;
+    if(isLoading) return <LoadingWidget />;
     const tabsContent = [
       {
         label: "Owned",
