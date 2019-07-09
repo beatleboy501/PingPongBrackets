@@ -1,23 +1,30 @@
 import React from 'react';
+import MenuItem from '@material-ui/core/MenuItem';
 import optionPropTypes from './propTypes';
-import MenuItem from "@material-ui/core/MenuItem";
 
 function Option(props) {
+  const {
+    children,
+    innerRef,
+    innerProps,
+    isFocused,
+    isSelected,
+  } = props;
   return (
     <MenuItem
-      buttonRef={props.innerRef}
-      selected={props.isFocused}
+      buttonRef={innerRef}
+      selected={isFocused}
       component="div"
       style={{
-        fontWeight: props.isSelected ? 500 : 400
+        fontWeight: isSelected ? 500 : 400,
       }}
-      {...props.innerProps}
+      {...innerProps}
     >
-      {props.children}
+      { children }
     </MenuItem>
   );
 }
 
-Option.propTypes = optionPropTypes;
+Option.propTypes = optionPropTypes; /* eslint import/no-named-as-default: 0 */
 
 export default Option;

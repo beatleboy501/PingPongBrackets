@@ -1,46 +1,46 @@
 const ellipsis = {
-  whiteSpace: "nowrap",
-  overflow: "hidden",
-  textOverflow: "ellipsis"
-}
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+};
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
     minWidth: '7rem',
     cursor: 'default',
-    width: '12rem'
+    width: '12rem',
   },
   input: {
-    display: "flex",
+    display: 'flex',
     cursor: 'default',
     padding: 0,
-    ...ellipsis
+    ...ellipsis,
   },
   valueContainer: {
-    display: "flex",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexWrap: 'wrap',
     flex: 1,
-    alignItems: "center",
-    overflow: "hidden",
+    alignItems: 'center',
+    overflow: 'hidden',
     maxHeight: '2rem',
   },
   noOptionsMessage: {
-    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`
+    padding: `${theme.spacing.unit}px ${theme.spacing.unit * 2}px`,
   },
   singleValue: {
     fontSize: 16,
-    ...ellipsis
+    ...ellipsis,
   },
   placeholder: {
-    position: "absolute",
+    position: 'absolute',
     left: 2,
-    fontSize: 16
+    fontSize: 16,
   },
   paper: {
     zIndex: 1,
-    position: 'fixed'
-  }
+    position: 'fixed',
+  },
 });
 
 export default styles;

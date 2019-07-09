@@ -1,7 +1,7 @@
 const styles = {
   card: {
     minWidth: 275,
-    marginBottom: '2rem'
+    marginBottom: '2rem',
   },
   bullet: {
     display: 'inline-block',

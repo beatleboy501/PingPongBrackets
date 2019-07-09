@@ -6,6 +6,6 @@ export default {
     width: '200px',
     listStyle: 'none',
     padding: 0,
-    cursor: 'default'
+    cursor: 'default',
   },
-}
+};

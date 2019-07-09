@@ -8,10 +8,10 @@ export default {
   dialogPaper: {
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   scoreInput: {
-    width: '5rem'
+    width: '5rem',
   },
   button: {
     margin: '2rem',

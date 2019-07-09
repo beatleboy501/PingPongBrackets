@@ -6,11 +6,11 @@ export const propTypes = {
   currentResult: PropTypes.objectOf(PropTypes.any),
   onClose: PropTypes.func,
   onSave: PropTypes.func,
-}
+};
 
 export const defaultProps = {
   classes: {},
   currentResult: {},
   onClose: () => {},
   onSave: () => {},
-}
+};

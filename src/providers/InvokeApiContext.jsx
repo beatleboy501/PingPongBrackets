@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 const propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node
-  ])
-}
+    PropTypes.node,
+  ]),
+};
 
 // Set Up The Initial Context
 const InvokeApiContext = React.createContext();
@@ -17,7 +17,8 @@ export const ApiConsumer = InvokeApiContext.Consumer;
 // Create the provider using a traditional React.Component class
 class ApiProvider extends React.Component {
   state = {
-    base: 'https://83yeog1v01.execute-api.us-east-1.amazonaws.com/mock/api' // Base URL for the API Gateway
+    // Base URL for the API Gateway
+    base: 'https://83yeog1v01.execute-api.us-east-1.amazonaws.com/mock/api', /* eslint react/no-unused-state: 0 */
   }
 
   render() {
@@ -28,15 +29,15 @@ class ApiProvider extends React.Component {
       <InvokeApiContext.Provider value={this.state}>
         {children}
       </InvokeApiContext.Provider>
-    )
+    );
   }
 }
 
 const defaultProps = {
   children: null,
-}
+};
 
 ApiProvider.propTypes = propTypes;
 ApiProvider.defaultProps = defaultProps;
 
-export default ApiProvider
+export default ApiProvider;

@@ -1,6 +1,6 @@
 import React from 'react';
+import TextField from '@material-ui/core/TextField';
 import { controlPropTypes, inputComponentPropTypes } from './propTypes';
-import TextField from "@material-ui/core/TextField";
 
 export function inputComponent({ inputRef, ...props }) {
   return <div ref={inputRef} {...props} />;
@@ -9,19 +9,27 @@ export function inputComponent({ inputRef, ...props }) {
 inputComponent.propTypes = inputComponentPropTypes;
 
 export function Control(props) {
+  const {
+    children,
+    innerProps,
+    innerRef,
+    selectProps,
+  } = props;
+  const { classes, textFieldProps } = selectProps;
+  const { input } = classes;
   return (
     <TextField
       fullWidth
       InputProps={{
         inputComponent,
         inputProps: {
-          className: props.selectProps.classes.input,
-          inputRef: props.innerRef,
-          children: props.children,
-          ...props.innerProps
-        }
+          className: input,
+          inputRef: innerRef,
+          children,
+          ...innerProps,
+        },
       }}
-      {...props.selectProps.textFieldProps}
+      {...textFieldProps}
     />
   );
 }

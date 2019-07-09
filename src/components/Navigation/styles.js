@@ -3,7 +3,7 @@ const drawerWidth = 240;
 const styles = theme => ({
   root: {
     display: 'flex',
-    flexGrow: 1
+    flexGrow: 1,
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {

@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types, react/jsx-handler-names */
 
-import React from "react";
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import NoSsr from '@material-ui/core/NoSsr';
+import Select from 'react-select';
 import styles from './styles';
-import typeaheadPropTypes from './propTypes';
+import typeaheadPropTypes from './propTypes'; /* eslint import/no-named-as-default: 0 */
 import Menu from './Menu';
 import ValueContainer from './ValueContainer';
 import SingleValue from './SingleValue';
@@ -10,9 +13,6 @@ import Placeholder from './Placeholder';
 import Option from './Option';
 import { Control } from './Control';
 import NoOptionsMessage from './NoOptionsMessage';
-import Select from "react-select";
-import { withStyles } from "@material-ui/core/styles";
-import NoSsr from "@material-ui/core/NoSsr";
 
 const components = {
   Control,
@@ -21,36 +21,40 @@ const components = {
   Option,
   Placeholder,
   SingleValue,
-  ValueContainer
+  ValueContainer,
 };
 
 class Typeahead extends React.Component {
   state = {
     single: null,
-    multi: null
   };
 
-  handleChange = name => value => {
-    const {onChange} = this.props
+  handleChange = name => (value) => {
+    const { onChange } = this.props;
     this.setState({
-      [name]: value
+      [name]: value,
     }, () => {
-      onChange(value)
+      onChange(value);
     });
   };
 
   render() {
-    const { classes, theme, seed, suggestions } = this.props;
+    const {
+      classes,
+      theme,
+      seed,
+      suggestions,
+    } = this.props;
     const selectStyles = {
       input: base => ({
         ...base,
         color: theme.palette.text.primary,
-        "& input": {
-          font: "inherit"
-        }
-      })
+        '& input': {
+          font: 'inherit',
+        },
+      }),
     };
-
+    const { single } = this.state;
     return (
       <div className={classes.root}>
         <NoSsr>
@@ -59,8 +63,8 @@ class Typeahead extends React.Component {
             styles={selectStyles}
             options={suggestions}
             components={components}
-            value={this.state.single}
-            onChange={this.handleChange("single")}
+            value={single}
+            onChange={this.handleChange('single')}
             placeholder={`Seed ${seed}`}
             isClearable
           />

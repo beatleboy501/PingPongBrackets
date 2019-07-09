@@ -4,7 +4,7 @@ export default {
     fontFamily: 'sans-serif',
     fontSize: 'small',
     padding: 10,
-    lineHeight: '1.4em'
+    lineHeight: '1.4em',
   },
   bracket: {
     display: 'flex',
@@ -25,6 +25,6 @@ export default {
     width: '200px',
     listStyle: 'none',
     padding: 0,
-    cursor: 'default'
-  }
-}
+    cursor: 'default',
+  },
+};

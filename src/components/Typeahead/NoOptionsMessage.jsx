@@ -1,15 +1,18 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 import { noOptionsMessagePropTypes } from './propTypes';
-import Typography from "@material-ui/core/Typography";
 
 function NoOptionsMessage(props) {
+  const { children, innerProps, selectProps } = props;
+  const { classes } = selectProps;
+  const { noOptionsMessage } = classes;
   return (
     <Typography
       color="textSecondary"
-      className={props.selectProps.classes.noOptionsMessage}
-      {...props.innerProps}
+      className={noOptionsMessage}
+      {...innerProps}
     >
-      {props.children}
+      {children}
     </Typography>
   );
 }

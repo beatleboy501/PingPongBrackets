@@ -8,7 +8,7 @@ export default {
     '& button': {
       width: '15rem',
       height: '9rem',
-      margin: '1rem'
-    }
-  }
-}
+      margin: '1rem',
+    },
+  },
+};

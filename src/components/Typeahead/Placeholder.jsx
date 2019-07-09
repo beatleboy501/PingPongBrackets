@@ -1,15 +1,18 @@
-import React from "react";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
 import { placeholderPropTypes } from './propTypes';
-import Typography from "@material-ui/core/Typography";
 
 function Placeholder(props) {
+  const { children, innerProps, selectProps } = props;
+  const { classes } = selectProps;
+  const { placeholder } = classes;
   return (
     <Typography
       color="textSecondary"
-      className={props.selectProps.classes.placeholder}
-      {...props.innerProps}
+      className={placeholder}
+      {...innerProps}
     >
-      {props.children}
+      {children}
     </Typography>
   );
 }

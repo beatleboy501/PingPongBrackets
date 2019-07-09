@@ -1,7 +1,7 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 import propTypes from './propTypes';
 import styles from './styles';
-import { withStyles } from '@material-ui/core/styles';
 
 const BracketRound = (props) => {
   const { index, gameList, classes } = props;
@@ -9,8 +9,8 @@ const BracketRound = (props) => {
     <ul className={classes.round} key={`round-${index}`}>
       {gameList}
     </ul>
-  )
-}
+  );
+};
 
 BracketRound.propTypes = propTypes;
 

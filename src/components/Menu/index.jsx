@@ -1,18 +1,18 @@
 import React from 'react';
+import Button from '@material-ui/core/Button';
+import { navigate } from '@reach/router';
+import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 import propTypes from './propTypes';
 import options from '../../constants/MenuOptions';
-import Button from '@material-ui/core/Button';
-import {navigate} from "@reach/router"
-import { withStyles } from '@material-ui/core/styles';
 
 class Menu extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.clickHandler = this.clickHandler.bind(this);
   }
 
-  clickHandler(e, option) {
+  clickHandler(e, option) { /* eslint class-methods-use-this: 0 */
     e.preventDefault();
     switch (option) {
       case options.createNewBracket:
@@ -34,12 +34,11 @@ class Menu extends React.Component {
     const { createNewBracket, viewMyBrackets, viewUsers } = options;
     return (
       <div className={classes.mainMenu}>
-      {[
-        [createNewBracket, "Create New Bracket"],
-        [viewMyBrackets, "View My Brackets"],
-        [viewUsers, "View Users"]
-      ].map(opt => {
-        return(
+        {[
+          [createNewBracket, 'Create New Bracket'],
+          [viewMyBrackets, 'View My Brackets'],
+          [viewUsers, 'View Users'],
+        ].map(opt => (
           <Button
             key={Math.random()}
             onClick={e => this.clickHandler(e, opt[0])}
@@ -49,10 +48,9 @@ class Menu extends React.Component {
           >
             {opt[1]}
           </Button>
-        )
-      })}
+        ))}
       </div>
-    )
+    );
   }
 }
 

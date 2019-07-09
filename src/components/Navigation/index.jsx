@@ -1,10 +1,7 @@
-import React from "react";
-import styles from './styles';
-import { defaultProps, propTypes } from './propTypes';
-import renderIcons from './renderIcons';
+import React from 'react';
 import classNames from 'classnames';
-import {withStyles} from '@material-ui/core/styles';
-import {navigate} from "@reach/router"
+import { withStyles } from '@material-ui/core/styles';
+import { navigate } from '@reach/router';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,7 +13,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import {Auth} from 'aws-amplify';
+import { Auth } from 'aws-amplify';
+import { defaultProps, propTypes } from './propTypes';
+import renderIcons from './renderIcons';
+import styles from './styles';
 
 class Navigation extends React.Component {
   state = {
@@ -39,19 +39,19 @@ class Navigation extends React.Component {
     navigate('/');
   }
 
-  render(){
+  render() {
     const { pageTitle, classes, theme } = this.props;
     const { open } = this.state;
     return (
       <div>
         <CssBaseline />
         <AppBar
-            className={classNames(classes.appBar, {
-              [classes.appBarShift]: open,
-            })}
-            position="fixed"
-            color="default"
-          >
+          className={classNames(classes.appBar, {
+            [classes.appBarShift]: open,
+          })}
+          position="fixed"
+          color="default"
+        >
           <Toolbar className={classes.parent} disableGutters={!open}>
             <div className={classes.menuButtonContainer}>
               <IconButton
@@ -96,4 +96,4 @@ class Navigation extends React.Component {
 Navigation.propTypes = propTypes;
 Navigation.defaultProps = defaultProps;
 
-export default withStyles(styles, {withTheme: true})(Navigation);
+export default withStyles(styles, { withTheme: true })(Navigation);

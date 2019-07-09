@@ -4,8 +4,8 @@ export const simpleTabPropTypes = {
   classes: PropTypes.object.isRequired,
   content: PropTypes.arrayOf(PropTypes.shape({
     children: PropTypes.arrayOf(PropTypes.object),
-    label: PropTypes.string
-  }))
+    label: PropTypes.string,
+  })),
 };
 
 export const tabContainerPropTypes = {

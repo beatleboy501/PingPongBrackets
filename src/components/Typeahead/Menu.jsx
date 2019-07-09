@@ -1,15 +1,18 @@
-import React from "react";
+import React from 'react';
+import Paper from '@material-ui/core/Paper';
 import { menuPropTypes } from './propTypes';
-import Paper from "@material-ui/core/Paper";
 
 function Menu(props) {
+  const { children, innerProps, selectProps } = props;
+  const { classes } = selectProps;
+  const { paper } = classes;
   return (
     <Paper
       square
-      className={props.selectProps.classes.paper}
-      {...props.innerProps}
+      className={paper}
+      {...innerProps}
     >
-      {props.children}
+      { children }
     </Paper>
   );
 }

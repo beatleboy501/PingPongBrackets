@@ -1,14 +1,17 @@
-import React from "react";
+import React from 'react';
+import Typography from '@material-ui/core/Typography';
 import { singleValuePropTypes } from './propTypes';
-import Typography from "@material-ui/core/Typography";
 
 function SingleValue(props) {
+  const { children, innerProps, selectProps } = props;
+  const { classes } = selectProps;
+  const { singleValue } = classes;
   return (
     <Typography
-      className={props.selectProps.classes.singleValue}
-      {...props.innerProps}
+      className={singleValue}
+      {...innerProps}
     >
-      {props.children}
+      {children}
     </Typography>
   );
 }

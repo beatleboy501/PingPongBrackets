@@ -1,10 +1,13 @@
-import React from "react";
+import React from 'react';
 import { valueContainerPropTypes } from './propTypes';
 
 function ValueContainer(props) {
+  const { children, selectProps } = props;
+  const { classes } = selectProps;
+  const { valueContainer } = classes;
   return (
-    <div className={props.selectProps.classes.valueContainer}>
-      {props.children}
+    <div className={valueContainer}>
+      {children}
     </div>
   );
 }

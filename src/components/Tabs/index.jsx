@@ -1,16 +1,17 @@
 import React from 'react';
-import { simpleTabPropTypes, tabContainerPropTypes } from './propTypes';
-import {styles, tabContainerStyles} from './styles';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
+import { simpleTabPropTypes, tabContainerPropTypes } from './propTypes';
+import { styles, tabContainerStyles } from './styles';
 
 function TabContainer(props) {
+  const { children } = props;
   return (
     <Typography component="div" style={tabContainerStyles}>
-      {props.children}
+      { children }
     </Typography>
   );
 }
@@ -19,10 +20,10 @@ TabContainer.propTypes = tabContainerPropTypes;
 
 class SimpleTabs extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      value: 0
-    }
+      value: 0,
+    };
     this.handleChange = this.handleChange.bind(this);
     this.renderTabs = this.renderTabs.bind(this);
   }
@@ -33,28 +34,22 @@ class SimpleTabs extends React.Component {
 
   renderTabs() {
     const { content } = this.props;
-    return content.map(tab => {
-      return(
-        <Tab key={Math.random()} label={tab.label} />
-      )
-    })
+    return content.map(tab => <Tab key={Math.random()} label={tab.label} />);
   }
 
   renderTabContainers = () => {
     const { value } = this.state;
     const { content } = this.props;
-    const tabContainers = content.map(tab => {
-      return(
-        <TabContainer key={Math.random()}>
-          {tab.children}
-        </TabContainer>
-      )
-    })
+    const tabContainers = content.map(tab => (
+      <TabContainer key={Math.random()}>
+        {tab.children}
+      </TabContainer>
+    ));
     return (
       <React.Fragment>
         {tabContainers[value]}
       </React.Fragment>
-    )
+    );
   }
 
   render() {
