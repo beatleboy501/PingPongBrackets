@@ -25,3 +25,4 @@ chrome-user-data
 .amplifyrc
 amplify/
 src/aws-exports.js
+src/.amplifyrc
