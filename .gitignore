@@ -22,7 +22,3 @@ chrome-user-data
 .vscode
 *.swp
 *.swo
-.amplifyrc
-amplify/
-src/aws-exports.js
-src/.amplifyrc

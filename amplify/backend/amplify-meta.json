@@ -1,0 +1,36 @@
+{
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "ingongrackets-20190709163427-authRole",
+            "UnauthRoleArn": "arn:aws:iam::107526309612:role/ingongrackets-20190709163427-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::107526309612:role/ingongrackets-20190709163427-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "ingongrackets-20190709163427-deployment",
+            "UnauthRoleName": "ingongrackets-20190709163427-unauthRole",
+            "StackName": "ingongrackets-20190709163427",
+            "StackId": "arn:aws:cloudformation:us-east-1:107526309612:stack/ingongrackets-20190709163427/f235b9d0-a288-11e9-974b-0a4c9dfbdd94"
+        }
+    },
+    "auth": {
+        "cognitod311e02d": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/ingongrackets-20190709163427-deployment/amplify-cfn-templates/auth/cognitod311e02d-cloudformation-template.yml",
+                "logicalId": "authcognitod311e02d"
+            },
+            "lastPushTimeStamp": "2019-07-09T21:25:31.140Z"
+        }
+    },
+    "storage": {
+        "PingPongBracketsStorage": {
+            "service": "S3",
+            "providerPlugin": "awscloudformation",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/ingongrackets-20190709163427-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
+                "logicalId": "storagePingPongBracketsStorage"
+            },
+            "lastPushTimeStamp": "2019-07-09T21:25:31.135Z"
+        }
+    }
+}
