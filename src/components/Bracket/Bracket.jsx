@@ -40,14 +40,11 @@ class Bracket extends Component {
     })
       .then(res => res.json())
       .then(data => this.setState({ ...data }))
-      .catch(err => console.error(err)); /* eslint no-console: 0 */
+      .catch(err => alert(err));
     window.scrollTo(0, 0);
   }
 
-  findUserById(id) {
-    const { users } = this.state;
-    return users.find(user => user.sub === id);
-  }
+  sortByNextGame = (a, b) => a.next_game - b.next_game || a.next_game.localeCompare(b.next_game);
 
   updateGameResult(e, game, winner, loser) {
     e && e.preventDefault(); /* eslint no-unused-expressions: 0 */
@@ -61,8 +58,9 @@ class Bracket extends Component {
     });
   }
 
-  sortByNextGame(a, b) { /* eslint class-methods-use-this: 0 */
-    return a.next_game - b.next_game || a.next_game.localeCompare(b.next_game);
+  findUserById(id) {
+    const { users } = this.state;
+    return users.find(user => user.sub === id);
   }
 
   handleCloseDialog(e) {

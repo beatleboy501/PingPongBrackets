@@ -12,7 +12,7 @@ class Menu extends React.Component {
     this.clickHandler = this.clickHandler.bind(this);
   }
 
-  clickHandler(e, option) { /* eslint class-methods-use-this: 0 */
+  clickHandler = (e, option) => {
     e.preventDefault();
     switch (option) {
       case options.createNewBracket:
@@ -24,6 +24,9 @@ class Menu extends React.Component {
       case options.viewUsers:
         navigate('users');
         break;
+      case options.bulkCsvUploads:
+        navigate('csv');
+        break;
       default:
         break;
     }
@@ -31,13 +34,19 @@ class Menu extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { createNewBracket, viewMyBrackets, viewUsers } = options;
+    const {
+      bulkCsvUploads,
+      createNewBracket,
+      viewMyBrackets,
+      viewUsers,
+    } = options;
     return (
       <div className={classes.mainMenu}>
         {[
           [createNewBracket, 'Create New Bracket'],
           [viewMyBrackets, 'View My Brackets'],
           [viewUsers, 'View Users'],
+          [bulkCsvUploads, 'Bulk CSV Uploads'],
         ].map(opt => (
           <Button
             key={Math.random()}

@@ -14,9 +14,12 @@ const BracketGame = ({
     <li className={classes.spacer}>
       &nbsp;
     </li>
-    <li /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
+    <button
       className={classes.gameTop}
       data-game-id={game ? game.id : ''}
+      role="link"
+      tabIndex={0}
+      type="button"
       onClick={e => updateGameResult(e, game, top, bottom)}
       onKeyDown={(e) => {
         if (e.keyCode === 13) updateGameResult(e, game, top, bottom);
@@ -25,13 +28,16 @@ const BracketGame = ({
       {top && top.given_name}
       &nbsp;
       {top && top.family_name}
-    </li>
+    </button>
     <li className={classes.gameSpacer}>
       &nbsp;
     </li>
-    <li /* eslint jsx-a11y/no-noninteractive-element-interactions: 0 */
+    <button
       className={classes.gameBottom}
       data-game-id={game ? game.id : ''}
+      role="link"
+      type="button"
+      tabIndex={0}
       onClick={e => updateGameResult(e, game, bottom, top)}
       onKeyDown={(e) => {
         if (e.keyCode === 13) updateGameResult(e, game, bottom, top);
@@ -40,7 +46,7 @@ const BracketGame = ({
       {bottom && bottom.given_name}
       &nbsp;
       {bottom && bottom.family_name}
-    </li>
+    </button>
     <li className={classes.spacer}>
       &nbsp;
     </li>

@@ -4,6 +4,7 @@ import { withAuthenticator } from 'aws-amplify-react';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import {
   CreateRoute,
+  CsvRoute,
   NotFoundRoute,
   MenuRoute,
   ViewRoute,
@@ -22,6 +23,7 @@ const App = () => (
       <Router>
         <MenuRoute path="/" />
         <CreateRoute path="/new" />
+        <CsvRoute path="/csv" />
         <ViewRoute path="/bracket/:bracketId" />
         <ViewUsersRoute path="/users" />
         <ViewBracketsRoute path="/brackets" />

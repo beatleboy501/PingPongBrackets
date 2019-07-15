@@ -5,6 +5,7 @@ import Menu from './Menu/index';
 import Navigation from './Navigation/index';
 import ViewUsers from './ViewUsers/index';
 import ViewBrackets from './ViewBrackets/index';
+import BulkCsvUploads from './BulkCsvUploads/index';
 
 const withNavigation = (pageTitle, component) => (
   <Fragment>
@@ -25,9 +26,12 @@ const ViewUsersRoute = () => withNavigation('Users', <ViewUsers />);
 
 const ViewBracketsRoute = () => withNavigation('Brackets', <ViewBrackets />);
 
+const CsvRoute = () => withNavigation('Bulk CSV Uploads', <BulkCsvUploads />);
+
 export {
   ViewRoute,
   CreateRoute,
+  CsvRoute,
   MenuRoute,
   NotFoundRoute,
   ViewBracketsRoute,

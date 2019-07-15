@@ -3,6 +3,8 @@ const styles = theme => ({
     flexGrow: '.5',
   },
   gameTop: {
+    border: 'none',
+    backgroundColor: 'transparent',
     borderBottom: `1px solid ${theme.palette.secondary.main}`,
     '&:hover': {
       color: 'white',
@@ -13,6 +15,8 @@ const styles = theme => ({
     },
   },
   gameBottom: {
+    border: 'none',
+    backgroundColor: 'transparent',
     borderTop: `1px solid ${theme.palette.secondary.main}`,
     '&:hover': {
       color: 'white',
