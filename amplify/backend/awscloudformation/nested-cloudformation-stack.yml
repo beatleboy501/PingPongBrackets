@@ -128,14 +128,14 @@
 				}
 			}
 		},
-		"storagePingPongBracketsStorage": {
+		"storagestoragePingPongBrackets": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
 				"TemplateURL": "https://s3.amazonaws.com/ingongrackets-20190709163427-deployment/amplify-cfn-templates/storage/s3-cloudformation-template.json",
 				"Parameters": {
-					"bucketName": "pingpongbracketsfe3ad05fa74b4a47902794d6b14632df",
-					"authPolicyName": "s3_amplify_0ee9eb2c",
-					"unauthPolicyName": "s3_amplify_0ee9eb2c",
+					"bucketName": "pingpongbracketsf092c1909ec647ffb85d1a01998e8692",
+					"authPolicyName": "s3_amplify_b244f9f7",
+					"unauthPolicyName": "s3_amplify_b244f9f7",
 					"authRoleName": "ingongrackets-20190709163427-authRole",
 					"unauthRoleName": "ingongrackets-20190709163427-unauthRole",
 					"authPermissions": "rw",

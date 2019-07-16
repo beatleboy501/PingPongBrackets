@@ -30,7 +30,8 @@ class BulkCsvUploads extends React.Component {
     }
     Storage.put(file.name, file, { contentType: 'text/csv' })
       .then((result) => {
-        alert(result);
+        console.log(result); /* eslint no-console: 0 */
+        alert(`Upload successful: ${JSON.stringify(result)}`);
         this.setState({ isUploading: false });
       })
       .catch((err) => {
