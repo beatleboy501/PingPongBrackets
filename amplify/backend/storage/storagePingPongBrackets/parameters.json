@@ -1,9 +1,0 @@
-{
-    "bucketName": "pingpongbracketsf092c1909ec647ffb85d1a01998e8692",
-    "authPolicyName": "s3_amplify_b244f9f7",
-    "unauthPolicyName": "s3_amplify_b244f9f7",
-    "authRoleName": "ingongrackets-20190709163427-authRole",
-    "unauthRoleName": "ingongrackets-20190709163427-unauthRole",
-    "authPermissions": "rw",
-    "unauthPermissions": ""
-}

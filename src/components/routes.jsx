@@ -26,12 +26,9 @@ const ViewUsersRoute = () => withNavigation('Users', <ViewUsers />);
 
 const ViewBracketsRoute = () => withNavigation('Brackets', <ViewBrackets />);
 
-const CsvRoute = () => withNavigation('Bulk CSV Uploads', <BulkCsvUploads />);
-
 export {
   ViewRoute,
   CreateRoute,
-  CsvRoute,
   MenuRoute,
   NotFoundRoute,
   ViewBracketsRoute,
